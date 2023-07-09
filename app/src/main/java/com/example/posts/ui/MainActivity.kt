@@ -2,7 +2,10 @@ package com.example.posts.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.posts.R
+import android.view.View
+import android.widget.Toast
+import com.example.posts.AppListener
+import com.example.posts.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -15,10 +18,28 @@ import dagger.hilt.android.AndroidEntryPoint
  * */
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity()  , AppListener {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    override fun showProgress() {
+        binding.layoutLoading.root.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        binding.layoutLoading.root.visibility = View.GONE
+    }
+
+    override fun showMessage(message: String?) {
+        message?.let {
+            Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
+        }
     }
 }
 

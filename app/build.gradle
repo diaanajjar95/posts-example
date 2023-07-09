@@ -64,6 +64,9 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.9"
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
 
+    // live event
+    implementation "com.github.hadilq.liveevent:liveevent:1.2.0"
+
 }
 
 // Allow references to generated code

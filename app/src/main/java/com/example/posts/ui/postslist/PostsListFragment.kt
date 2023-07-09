@@ -2,29 +2,27 @@ package com.example.posts.ui.postslist
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.posts.R
 import com.example.posts.data.models.Post
 import com.example.posts.databinding.FragmentPostsListBinding
+import com.example.posts.ui.base.BaseFragment
+import com.example.posts.ui.base.BaseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "PostsListFragment"
 
 @AndroidEntryPoint
-class PostsListFragment : Fragment() {
+class PostsListFragment : BaseFragment() {
 
     private lateinit var binding: FragmentPostsListBinding
 
     private val viewModel: PostsListViewModel by viewModels()
     private val postsAdapter = PostsAdapter()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +55,11 @@ class PostsListFragment : Fragment() {
             postsAdapter.setItems(it)
         }
 
+        viewModel.getPosts()
+    }
+
+    override fun getViewModel(): BaseViewModel {
+        return viewModel
     }
 
 }
