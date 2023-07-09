@@ -6,11 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.example.posts.R
+import com.example.posts.databinding.FragmentPostDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PostDetailsFragment : Fragment() {
+
+    private lateinit var binding: FragmentPostDetailsBinding
+    private val args: PostDetailsFragmentArgs by navArgs()
 
     private val viewModel: PostDetailsViewModel by viewModels()
 
@@ -18,12 +23,18 @@ class PostDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_post_details, container, false)
+        binding = FragmentPostDetailsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.test()
+
+        viewModel.post.observe(viewLifecycleOwner){
+            binding.post = it
+        }
+
+        viewModel.getPostById(args.postId)
     }
 
 }
